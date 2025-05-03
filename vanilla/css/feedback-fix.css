@@ -1,0 +1,189 @@
+/* Additional fixes for Profile page */
+
+/* Fix all SVG icons */
+svg {
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2 !important;
+}
+
+/* Improve the profile container */
+.profile-container {
+    padding: 2rem 1.5rem;
+}
+
+.profile-content {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-gray-200);
+}
+
+/* Enhance loading state */
+.loading-state {
+    min-height: 50vh;
+}
+
+.spinner {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    border: 5px solid var(--color-indigo-100);
+    border-top: 5px solid var(--color-indigo-600);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+/* Improve form styling */
+.form-section {
+    background-color: var(--color-gray-50);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--color-gray-200);
+}
+
+.section-title {
+    color: var(--color-indigo-700);
+    font-weight: 600;
+    border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    color: var(--color-indigo-700);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    border: 1px solid var(--color-gray-300);
+    transition: all 0.2s ease;
+}
+
+.form-group input:hover:not([disabled]),
+.form-group select:hover:not([disabled]),
+.form-group textarea:hover:not([disabled]) {
+    border-color: var(--color-indigo-400);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    border-color: var(--color-indigo-500);
+}
+
+/* Make disabled fields more obvious */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+    background-color: var(--color-gray-100);
+    border-color: var(--color-gray-300);
+    color: var(--color-gray-700);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Improve button styling */
+.primary-button {
+    background: linear-gradient(to right, var(--color-indigo-500), var(--color-indigo-600));
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}
+
+.primary-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+}
+
+.primary-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    background: var(--color-gray-400);
+}
+
+.secondary-button {
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 2px solid var(--color-indigo-500);
+}
+
+.secondary-button:hover {
+    background-color: var(--color-indigo-50);
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Enhance modal styling */
+.modal-overlay {
+    backdrop-filter: blur(2px);
+}
+
+.modal-container {
+    width: 95%;
+    max-width: 32rem;
+}
+
+.modal-content {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-gray-200);
+}
+
+.modal-icon {
+    width: 3rem;
+    height: 3rem;
+    box-shadow: 0 2px 5px rgba(202, 138, 4, 0.2);
+}
+
+.modal-icon svg {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+}
+
+/* Enhance status messages */
+.status-message {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.status-message.error {
+    background-color: var(--color-red-50);
+    color: var(--color-red-700);
+    border: 1px solid var(--color-red-200);
+}
+
+.status-message.success {
+    background-color: var(--color-green-50);
+    color: var(--color-green-700);
+    border: 1px solid var(--color-green-200);
+}
+
+/* Fix specifically for edit/save button visibility */
+#edit-profile.hidden,
+#save-profile.hidden {
+    display: none !important;
+}
+
+/* Responsive improvements */
+@media (min-width: 768px) {
+    .profile-container {
+        padding: 3rem;
+    }
+    
+    .profile-content {
+        padding: 3rem;
+        border-radius: 1rem;
+    }
+    
+    .form-section {
+        padding: 2rem;
+    }
+}

@@ -1,0 +1,325 @@
+/* Comprehensive RTL Layout Fixes */
+
+/* === STRONG RTL LAYOUT MIRRORING === */
+
+/* Main containers */
+[dir="rtl"] .main-content,
+[dir="rtl"] .menu-container,
+[dir="rtl"] .footer-container,
+[dir="rtl"] .container,
+[dir="rtl"] .content-container,
+[dir="rtl"] .schedule-container,
+[dir="rtl"] .planner-container,
+[dir="rtl"] .feedback-container,
+[dir="rtl"] .profile-container,
+[dir="rtl"] .auth-container,
+[dir="rtl"] .confirmation-container,
+[dir="rtl"] .confirmation-content {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* Flex and grid reversals */
+[dir="rtl"] .flex-row,
+[dir="rtl"] .d-flex,
+[dir="rtl"] .row,
+[dir="rtl"] .input-row,
+[dir="rtl"] .route-summary,
+[dir="rtl"] .feedbacks-container,
+[dir="rtl"] .action-buttons,
+[dir="rtl"] .section-header,
+[dir="rtl"] .admin-header,
+[dir="rtl"] .admin-content,
+[dir="rtl"] .admin-section,
+[dir="rtl"] .modal-header,
+[dir="rtl"] .modal-body,
+[dir="rtl"] .users-table,
+[dir="rtl"] .pagination {
+    flex-direction: row-reverse !important;
+}
+
+[dir="rtl"] .menu-item,
+[dir="rtl"] .feedback-card,
+[dir="rtl"] .summary-item,
+[dir="rtl"] .detail-item {
+    flex-direction: row-reverse !important;
+    text-align: right !important;
+}
+
+/* Grid columns (if using CSS grid) */
+[dir="rtl"] .feedbacks-container {
+    direction: rtl !important;
+}
+
+/* Navbar and nav actions */
+[dir="rtl"] .navbar,
+[dir="rtl"] .nav-actions {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+}
+
+/* Icon and button mirroring */
+[dir="rtl"] .nav-button svg,
+[dir="rtl"] .menu-icon,
+[dir="rtl"] .success-icon,
+[dir="rtl"] .analytics-card-icon,
+[dir="rtl"] .contact-icon {
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+}
+
+/* Burger menu and dropdowns */
+[dir="rtl"] .burger-menu-container,
+[dir="rtl"] .burger-dropdown,
+[dir="rtl"] .burger-dropdown-item {
+    left: 1rem !important;
+    right: auto !important;
+    text-align: right !important;
+}
+
+/* Inputs and forms */
+[dir="rtl"] input,
+[dir="rtl"] select,
+[dir="rtl"] textarea {
+    text-align: right;
+}
+
+/* Table and pagination */
+[dir="rtl"] .users-table th,
+[dir="rtl"] .users-table td {
+    text-align: right !important;
+}
+[dir="rtl"] .pagination {
+    justify-content: flex-start !important;
+}
+
+/* Modal and dialog */
+[dir="rtl"] .modal-header,
+[dir="rtl"] .modal-body {
+    text-align: right !important;
+}
+
+/* Feedback and confirmation */
+[dir="rtl"] .confirmation-title,
+[dir="rtl"] .confirmation-message {
+    text-align: right !important;
+}
+
+/* Responsive fixes for RTL */
+@media (max-width: 640px) {
+    [dir="rtl"] .info-panel {
+        left: 1rem !important;
+        right: 1rem !important;
+    }
+}
+
+/* END STRONG RTL MIRRORING */
+
+/* === EXPLICIT MENU & NAVBAR MIRRORING === */
+
+/* Menu item content: icon right, arrow left, text right-aligned */
+[dir="rtl"] .menu-item {
+    flex-direction: row-reverse !important;
+    text-align: right !important;
+}
+[dir="rtl"] .menu-item .menu-icon {
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+    order: 3;
+}
+[dir="rtl"] .menu-item .menu-text {
+    text-align: right !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    order: 2;
+}
+[dir="rtl"] .menu-item .menu-arrow {
+    margin-right: 1rem !important;
+    margin-left: 0 !important;
+    order: 1;
+    transform: rotate(180deg);
+}
+
+/* Navbar mirroring */
+[dir="rtl"] .navbar {
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+}
+[dir="rtl"] .navbar .nav-brand {
+    margin-left: 0 !important;
+    margin-right: 1.5rem !important;
+    order: 3;
+}
+[dir="rtl"] .navbar .user-info {
+    flex-direction: row-reverse !important;
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+    text-align: right !important;
+    order: 2;
+}
+[dir="rtl"] .navbar .nav-actions {
+    flex-direction: row-reverse !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    order: 1;
+}
+[dir="rtl"] .navbar .nav-button {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+}
+
+/* END EXPLICIT MENU & NAVBAR MIRRORING */
+
+/* Main layout reversals for RTL mode */
+.rtl .navbar,
+[dir="rtl"] .navbar {
+    flex-direction: row-reverse;
+}
+
+/* Logo positioning in RTL */
+.rtl .nav-brand,
+[dir="rtl"] .nav-brand {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+/* Flip user info section */
+.rtl .user-info,
+[dir="rtl"] .user-info {
+    flex-direction: row-reverse;
+    margin-right: auto;
+    margin-left: 1rem;
+}
+
+/* Flip burger menu positioning */
+.rtl .burger-menu-container,
+[dir="rtl"] .burger-menu-container {
+    left: 1rem;
+    right: auto;
+}
+
+/* Reverse all flex containers */
+.rtl .flex-row,
+.rtl .d-flex,
+[dir="rtl"] .flex-row,
+[dir="rtl"] .d-flex {
+    flex-direction: row-reverse !important;
+}
+
+/* Fix button icons and spacing */
+.rtl .nav-button svg,
+[dir="rtl"] .nav-button svg {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/* Fix dropdown items */
+.rtl .dropdown-item,
+.rtl .burger-dropdown-item,
+[dir="rtl"] .dropdown-item,
+[dir="rtl"] .burger-dropdown-item {
+    text-align: right;
+    flex-direction: row-reverse;
+}
+
+/* Fix input groups */
+.rtl .input-group,
+[dir="rtl"] .input-group {
+    flex-direction: row-reverse;
+}
+
+/* Fix alignment of text and elements */
+.rtl,
+[dir="rtl"] {
+    text-align: right;
+}
+
+/* Fix positioning of burger dropdown */
+.rtl .burger-dropdown,
+[dir="rtl"] .burger-dropdown {
+    left: 0;
+    right: auto;
+}
+
+/* Fix margins throughout the app */
+.rtl .mr-auto,
+[dir="rtl"] .mr-auto {
+    margin-right: 0 !important;
+    margin-left: auto !important;
+}
+
+.rtl .ml-auto,
+[dir="rtl"] .ml-auto {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+/* Fix nav actions alignment */
+.rtl .nav-actions,
+[dir="rtl"] .nav-actions {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Fix back buttons */
+.rtl .back-button-container,
+[dir="rtl"] .back-button-container {
+    flex-direction: row-reverse;
+}
+
+/* Fix padding and positioning */
+.rtl .pr-3, 
+[dir="rtl"] .pr-3 {
+    padding-right: 0 !important;
+    padding-left: 1rem !important;
+}
+
+.rtl .pl-3,
+[dir="rtl"] .pl-3 {
+    padding-left: 0 !important;
+    padding-right: 1rem !important;
+}
+
+/* Forms and inputs */
+.rtl input, 
+.rtl select,
+.rtl textarea,
+[dir="rtl"] input,
+[dir="rtl"] select,
+[dir="rtl"] textarea {
+    text-align: right;
+}
+
+/* Complete reversing for specific containers */
+.rtl .container,
+.rtl .content-container,
+.rtl .schedule-container,
+.rtl .planner-container,
+.rtl .feedback-container,
+.rtl .profile-container,
+[dir="rtl"] .container,
+[dir="rtl"] .content-container,
+[dir="rtl"] .schedule-container,
+[dir="rtl"] .planner-container,
+[dir="rtl"] .feedback-container,
+[dir="rtl"] .profile-container {
+    direction: rtl;
+}
+
+/* Fix navbar elements */
+.rtl .navbar,
+[dir="rtl"] .navbar {
+    justify-content: flex-start;
+}
+
+.rtl .navbar > *:first-child,
+[dir="rtl"] .navbar > *:first-child {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.rtl .navbar > *:last-child,
+[dir="rtl"] .navbar > *:last-child {
+    margin-left: auto;
+    margin-right: 0;
+}

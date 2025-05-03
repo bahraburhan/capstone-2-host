@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bus Tracking System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin-modal.css">
+    <!-- Import Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-storage-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin-guard.js"></script>
+</head>
+<body class="admin-body">
+    <!-- Loading Screen -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading Admin Dashboard...</p>
+    </div>
+
+    <!-- Admin Authentication Check -->
+    <div id="auth-error" class="auth-error hidden">
+        <div class="auth-error-container">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Access Denied</h2>
+            <p>You don't have permission to access the admin dashboard. Please log in with an admin account.</p>
+            <a href="login.html" class="auth-error-button">Back to Login</a>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Content -->
+    <div id="admin-dashboard" class="admin-dashboard hidden">
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <i class="fas fa-bus"></i>
+                <h3>Bus Admin</h3>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li class="active" data-section="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </li>
+                    <li data-section="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </li>
+                    <li data-section="feedbacks">
+                        <i class="fas fa-comments"></i>
+                        <span>Feedbacks</span>
+                    </li>
+                    <li data-section="advertisements">
+                        <i class="fas fa-ad"></i>
+                        <span>Advertisements</span>
+                    </li>
+                    <li id="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="admin-content">
+            <div class="admin-header">
+                <div class="admin-header-title">
+                    <h2 id="section-title">User Management</h2>
+                </div>
+                <div class="admin-user-info">
+                    <span id="admin-user-name">Admin User</span>
+                    <div class="admin-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-main">
+                <!-- Users Section -->
+                <section id="users-section" class="admin-section active">
+                    <div class="section-header">
+                        <h3>Manage Users</h3>
+                        <div class="section-actions">
+                            <div class="search-box">
+                                <input type="text" id="user-search" placeholder="Search users...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="users-table-container">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <!-- User data will be inserted here dynamically -->
+                                <tr class="user-loading">
+                                    <td colspan="6">Loading users...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                        <span id="page-info">Page 1 of 1</span>
+                        <button id="next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+                
+                <!-- Analytics Section -->
+                <section id="analytics-section" class="admin-section">
+                    <div class="section-header">
+                        <h3>System Analytics</h3>
+                        <div class="section-actions">
+                            <select id="time-range">
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 90 days</option>
+                                <option value="365">Last year</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-cards">
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon users-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="analytics-card-content">
+                                <h4>Total Users</h4>
+                                <p id="total-users">Loading...</p>
+                                <span id="users-change" class="change-indicator positive">
+                                    <i class="fas fa-arrow-up"></i> Loading...
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon feedback-icon">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="analytics-card-content">
+                                <h4>Feedbacks</h4>
+                                <p id="total-feedbacks">Loading...</p>
+                                <span id="feedbacks-change" class="change-indicator positive">
+                                    <i class="fas fa-arrow-up"></i> Loading...
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon rating-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="analytics-card-content">
+                                <h4>Avg. Rating</h4>
+                                <p id="avg-rating">Loading...</p>
+                                <span id="rating-change" class="change-indicator neutral">
+                                    <i class="fas fa-minus"></i> Loading...
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-card-icon active-icon">
+                                <i class="fas fa-user-clock"></i>
+                            </div>
+                            <div class="analytics-card-content">
+                                <h4>Active Users</h4>
+                                <p id="active-users">Loading...</p>
+                                <span id="active-change" class="change-indicator positive">
+                                    <i class="fas fa-arrow-up"></i> Loading...
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-charts">
+                        <div class="chart-container">
+                            <h4>User Growth</h4>
+                            <div id="user-growth-chart" class="chart">
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-line"></i>
+                                    <p>Loading chart data...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <h4>Feedback Ratings</h4>
+                            <div id="feedback-ratings-chart" class="chart">
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <p>Loading chart data...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Feedbacks Section -->
+                <section id="feedbacks-section" class="admin-section">
+                    <div class="section-header">
+                        <h3>User Feedbacks</h3>
+                        <div class="section-actions">
+                            <div class="search-box">
+                                <input type="text" id="feedback-search" placeholder="Search feedbacks...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <select id="feedback-filter">
+                                <option value="all">All Ratings</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="feedbacks-container" class="feedbacks-container">
+                        <!-- Feedback cards will be inserted here dynamically -->
+                        <div class="feedback-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading feedbacks...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button id="feedback-prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                        <span id="feedback-page-info">Page 1 of 1</span>
+                        <button id="feedback-next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+                
+                <!-- Advertisements Section -->
+                <section id="advertisements-section" class="admin-section">
+                    <div class="section-header">
+                        <h3>Manage Advertisements</h3>
+                        <div class="section-actions">
+                            <div class="search-box">
+                                <input type="text" id="ad-search" placeholder="Search advertisements...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <button id="add-advertisement" class="primary-button">
+                                <i class="fas fa-plus"></i> Add New Ad
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="advertisements-container" class="advertisements-container">
+                        <!-- Advertisement cards will be inserted here dynamically -->
+                        <div class="ad-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading advertisements...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button id="ad-prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                        <span id="ad-page-info">Page 1 of 1</span>
+                        <button id="ad-next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for user details/edit -->
+    <div id="user-modal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">User Details</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="user-form">
+                    <div class="form-group">
+                        <label for="user-email">Email:</label>
+                        <input type="email" id="user-email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-name">Name:</label>
+                        <input type="text" id="user-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-role">Role:</label>
+                        <select id="user-role">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-status">Status:</label>
+                        <select id="user-status">
+                            <option value="active">Active</option>
+                            <option value="disabled">Disabled</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="save-user" class="primary-button">Save Changes</button>
+                        <button type="button" id="cancel-edit" class="secondary-button">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for feedback details -->
+    <div id="feedback-modal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Feedback Details</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="feedback-details">
+                    <div class="feedback-user-info">
+                        <h4 id="feedback-user-email">user@example.com</h4>
+                        <span id="feedback-date">January 1, 2023</span>
+                    </div>
+                    
+                    <div class="feedback-ratings">
+                        <div class="rating-item">
+                            <span>Overall Rating:</span>
+                            <div id="modal-overall-rating" class="stars-display"></div>
+                        </div>
+                        <div class="rating-item">
+                            <span>Schedule Timing:</span>
+                            <div id="modal-schedule-rating" class="stars-display"></div>
+                        </div>
+                        <div class="rating-item">
+                            <span>Bus Quality:</span>
+                            <div id="modal-quality-rating" class="stars-display"></div>
+                        </div>
+                        <div class="rating-item">
+                            <span>Route Accuracy:</span>
+                            <div id="modal-route-rating" class="stars-display"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-comments">
+                        <h5>Comments:</h5>
+                        <p id="feedback-comments-text"></p>
+                    </div>
+                    
+                    <div class="feedback-actions">
+                        <button id="delete-feedback" class="delete-button">
+                            <i class="fas fa-trash"></i> Delete Feedback
+                        </button>
+                        <button id="close-feedback" class="secondary-button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for advertisement create/edit -->
+    <div id="advertisement-modal" class="admin-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="ad-modal-title">Add New Advertisement</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="advertisement-form">
+                    <div class="form-group">
+                        <label for="ad-title">Title:</label>
+                        <input type="text" id="ad-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ad-description">Description:</label>
+                        <textarea id="ad-description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ad-link">Link URL:</label>
+                        <input type="url" id="ad-link" required placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="ad-location">Display Location:</label>
+                        <select id="ad-location" required>
+                            <option value="index">Home Page</option>
+                            <option value="menu">Menu Page</option>
+                            <option value="route">Route Page</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ad-image">Advertisement Image:</label>
+                        <div class="image-upload-container">
+                            <div id="image-preview" class="image-preview">
+                                <i class="fas fa-image"></i>
+                                <p>No image selected</p>
+                            </div>
+                            <input type="file" id="ad-image" accept="image/*">
+                            <label for="ad-image" class="file-upload-btn">Choose Image</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-actions">
+                            <button type="button" id="save-advertisement" class="primary-button">Save Advertisement</button>
+                            <button type="button" id="cancel-ad-edit" class="secondary-button">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin-core.js"></script>
+    <script src="js/admin-users.js"></script>
+    <script src="js/admin-feedback.js"></script>
+    <script src="js/admin-ads.js"></script>
+    <script src="js/admin-modal-fix.js"></script>
+</body>
+</html>

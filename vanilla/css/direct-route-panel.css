@@ -1,0 +1,109 @@
+.direct-route-info-panel {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.route-summary-box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    padding: 15px;
+    margin: 0 auto;
+    max-width: 768px;
+}
+
+.route-details-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.route-detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.route-detail-label {
+    font-weight: 500;
+    color: #666;
+}
+
+.route-detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.route-stops {
+    margin-top: 12px;
+    padding: 10px;
+    background-color: #f5f9ff;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+}
+
+.route-stop {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.route-stop:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #3498db;
+}
+
+.route-stop.start:before {
+    background-color: #2ecc71;
+}
+
+.route-stop.end:before {
+    background-color: #e74c3c;
+}
+
+.route-time {
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f0f7ff;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* RTL support */
+/* RTL fixes not needed for below-map panel */
+
+html[dir="rtl"] .route-stops {
+    border-left: none;
+    border-right: 4px solid #3498db;
+}
+
+html[dir="rtl"] .route-stop {
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+html[dir="rtl"] .route-stop:before {
+    left: auto;
+    right: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .direct-route-info-panel {
+        width: 100%;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}

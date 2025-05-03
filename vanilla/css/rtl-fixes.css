@@ -1,0 +1,42 @@
+/* RTL Fixes for Navigation and Language Toggle */
+
+/* Ensure all buttons and navigation elements are clickable in RTL mode */
+.rtl .nav-button, 
+.rtl .burger-dropdown-item,
+.rtl #language-toggle,
+.rtl .burger-menu-btn,
+.rtl a.burger-dropdown-item,
+.rtl button.burger-dropdown-item,
+.rtl .close-menu-btn {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* Special fix for language toggle button in RTL mode */
+#language-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve visibility of language toggle button */
+#language-toggle, #burger-language-toggle {
+    background: rgba(255, 255, 255, 0.25) !important;
+    font-weight: bold !important;
+    z-index: 200;
+}
+
+/* Force allow interaction with navigation elements */
+body * {
+    touch-action: auto !important;
+}
+
+/* Enhance hover state */
+.nav-button:hover,
+.burger-dropdown-item:hover,
+#language-toggle:hover,
+.burger-menu-btn:hover {
+    opacity: 0.8;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}

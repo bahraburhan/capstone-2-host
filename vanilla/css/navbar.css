@@ -1,0 +1,801 @@
+/* Enhanced Navbar styles */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    color: black;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    height: 70px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.nav-brand:hover {
+    transform: scale(1.02);
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.logo-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    margin-right: 0.75rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    color: black;
+    transition: all 0.3s ease;
+}
+
+.logo-circle:hover {
+    background-color: #e2e8f0;
+    transform: rotate(5deg);
+}
+
+.logo-circle .icon {
+    color: #4338ca !important;
+    stroke: #4338ca !important;
+    fill: none;
+    stroke-width: 2;
+}
+
+.app-name {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #1e293b;
+    letter-spacing: -0.01em;
+}
+
+/* Nav actions (right side of navbar) */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: black;
+}
+
+/* User info */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 0.75rem;
+    padding: 0.375rem 0.75rem;
+    background-color: #f8fafc;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.user-info:hover {
+    background-color: #f1f5f9;
+}
+
+#user-display-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #4338ca;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Language button in navbar */
+.nav-actions .language-button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #4b5563;
+    transition: all 0.3s ease;
+}
+
+.nav-actions .language-button svg {
+    margin-right: 0.5rem;
+    stroke: #4338ca;
+}
+
+.nav-actions .language-button:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.nav-actions .language-button:active {
+    transform: translateY(0);
+}
+
+/* Enhanced Burger Menu */
+.burger-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.burger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: #1e293b;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Burger animation for open state */
+.burger-menu-btn.active .burger-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.burger-menu-btn.active .burger-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu-btn.active .burger-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay with improved animation */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    max-width: 320px;
+    background-color: white;
+    box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow-x: hidden;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+}
+
+.mobile-menu.open {
+    width: 85%;
+    max-width: 320px;
+    visibility: visible;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+    background-color: #f8fafc;
+}
+
+.menu-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #1e293b;
+}
+
+.close-menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-menu-btn:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.close-menu-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Enhanced Mobile Menu Items */
+.mobile-menu-items {
+    padding: 1rem;
+}
+
+.mobile-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    color: #1e293b;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-item svg {
+    margin-right: 0.875rem;
+    color: #4338ca;
+}
+
+.mobile-menu-item:hover {
+    background-color: #f1f5f9;
+}
+
+.mobile-menu-item.active {
+    background-color: #ede9fe;
+    color: #4338ca;
+    font-weight: 500;
+}
+
+/* Button row below navbar */
+.button-row {
+    display: flex;
+    padding: 0.75rem 1.25rem;
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.875rem;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #4b5563;
+    transition: all 0.3s ease;
+}
+
+.back-button svg {
+    margin-right: 0.5rem;
+}
+
+.back-button:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.back-button:active {
+    transform: translateY(0);
+}
+
+/* RTL support with enhanced styling */
+html[dir="rtl"] .logo-circle {
+    margin-right: 0;
+    margin-left: 0.75rem;
+}
+
+html[dir="rtl"] .mobile-menu {
+    right: auto;
+    left: 0;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+html[dir="rtl"] .mobile-menu-item svg {
+    margin-right: 0;
+    margin-left: 0.875rem;
+}
+
+html[dir="rtl"] .back-button svg,
+html[dir="rtl"] .nav-actions .language-button svg {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+html[dir="rtl"] .burger-menu-btn.active .burger-bar:nth-child(1) {
+    transform: translateY(8px) rotate(-45deg);
+}
+
+html[dir="rtl"] .burger-menu-btn.active .burger-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(45deg);
+}
+
+/* Enhanced responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.625rem 1rem;
+        height: 64px;
+    }
+    
+    .app-name {
+        font-size: 1.125rem;
+    }
+    
+    .logo-circle {
+        width: 38px;
+        height: 38px;
+    }
+    
+    /* Hide language text on small screens */
+    #language-text {
+        display: none;
+    }
+    
+    .nav-actions .language-button {
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .nav-actions .language-button svg {
+        margin-right: 0;
+        margin-left: 0; /* Reset margin for RTL */
+    }
+    
+    /* Make user info more compact */
+    .user-info {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    #user-display-name {
+        font-size: 0.75rem;
+        max-width: 80px;
+    }
+}
+
+/* Additional animation for active links */
+.mobile-menu-item.active svg {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Page transition animation */
+.page-transition {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced menu container styling */
+.menu-container {
+    width: 100%;
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.menu-item {
+    width: 100%;
+    background-color: white;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.menu-item-content {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    text-align: left;
+}
+
+.menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ede9fe;
+    border-radius: 12px;
+    padding: 0.75rem;
+    margin-right: 1.25rem;
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.3s ease;
+}
+
+html[dir="rtl"] .menu-icon {
+    margin-right: 0;
+    margin-left: 1.25rem;
+}
+
+@media (max-width: 640px) {
+    html[dir="rtl"] .menu-icon {
+        margin-right: 0;
+        margin-left: 0.875rem;
+    }
+}
+
+.menu-item:hover .menu-icon {
+    background-color: #ddd6fe;
+}
+
+.menu-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke: #4338ca;
+    fill: none;
+}
+
+.menu-text {
+    flex-grow: 1;
+}
+
+.menu-text h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.375rem;
+    color: #1e293b;
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover .menu-text h2 {
+    transform: translateX(0.25rem);
+    color: #4338ca;
+}
+
+html[dir="rtl"] .menu-item:hover .menu-text h2 {
+    transform: translateX(-0.25rem);
+}
+
+.menu-text p {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.menu-arrow {
+    margin-left: 1rem;
+    color: #94a3b8;
+    transition: transform 0.3s ease;
+}
+
+html[dir="rtl"] .menu-arrow {
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+.menu-arrow svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.menu-item:hover .menu-arrow {
+    transform: translateX(0.25rem);
+    color: #4338ca;
+}
+
+html[dir="rtl"] .menu-item:hover .menu-arrow {
+    transform: translateX(-0.25rem);
+}
+
+/* Responsive menu items */
+@media (max-width: 640px) {
+    .menu-container {
+        padding: 0 0.5rem;
+    }
+    
+    .menu-item-content {
+        padding: 1rem;
+    }
+    
+    .menu-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0.5rem;
+        margin-right: 0.875rem;
+    }
+    
+    .menu-text h2 {
+        font-size: 1.125rem;
+    }
+    
+    .menu-text p {
+        font-size: 0.75rem;
+    }
+}
+
+
+/* Enhanced RTL Support for Bus Schedule App */
+
+/* Global RTL Adjustments */
+html[dir="rtl"] {
+    text-align: right;
+    
+}
+
+/* Navbar RTL Fixes */
+html[dir="rtl"] .nav-brand {
+    flex-direction: row;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    order: 2;
+}
+
+html[dir="rtl"] .logo-circle {
+    margin-right: 0;
+    margin-left: 0.75rem;    width: 100%;
+
+}
+
+html[dir="rtl"] .nav-actions {
+    flex-direction: row;
+     width: 100%; 
+     display: flex;
+    justify-content: flex-start;
+
+
+}
+
+html[dir="rtl"] .user-info {
+    margin-right: 0;
+    margin-left: 0.75rem;
+}
+
+html[dir="rtl"] .nav-actions .language-button svg {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/* Mobile Menu RTL Fixes */
+html[dir="rtl"] .mobile-menu {
+    right: auto;
+    left: 0;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+html[dir="rtl"] .mobile-menu.open {
+    transform: translateX(0);
+}
+
+html[dir="rtl"] .mobile-menu-header {
+    flex-direction: row;
+    width: 100%;
+}
+
+html[dir="rtl"] .mobile-menu-item {
+    flex-direction: row;
+    width: 100%;
+}
+
+html[dir="rtl"] .mobile-menu-item svg {
+    margin-right: 0;
+    margin-left: 0.875rem;
+}
+
+/* Back Button RTL Fixes */
+html[dir="rtl"] .back-button {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .back-button svg {
+    margin-right: 0;
+    margin-left: 0.5rem;
+    transform: rotate(180deg);
+}
+
+/* Menu Items RTL Fixes */
+html[dir="rtl"] .menu-item-content {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+html[dir="rtl"] .menu-icon {
+    margin-right: 0;
+    margin-left: 1.25rem;
+}
+
+html[dir="rtl"] .menu-arrow {
+    margin-left: 0;
+    margin-right: 1rem;
+    transform: rotate(180deg);
+}
+
+html[dir="rtl"] .menu-item:hover .menu-text h2 {
+    transform: translateX(-0.25rem);
+}
+
+html[dir="rtl"] .menu-item:hover .menu-arrow {
+    transform: translateX(-0.25rem) rotate(180deg);
+}
+
+/* Schedule Page RTL Fixes */
+html[dir="rtl"] .search-title::before {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+html[dir="rtl"] .results-title::before {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+html[dir="rtl"] .form-group label {
+    text-align: right;
+}
+
+html[dir="rtl"] .search-button {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .search-button svg {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+html[dir="rtl"] .street-select-container select {
+    background-position: left 1rem center;
+    text-align: right;
+    padding-right: 1rem;
+    padding-left: 2rem;
+}
+
+html[dir="rtl"] .bus-line {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .bus-line svg {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+html[dir="rtl"] .time-group:first-child {
+    text-align: right;
+}
+
+html[dir="rtl"] .time-group:last-child {
+    text-align: left;
+}
+
+html[dir="rtl"] .view-route-button {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .view-route-button svg {
+    margin-right: 0;
+    margin-left: 6px;
+    transform: scaleX(-1);
+}
+
+/* Fix for burger menu animation in RTL */
+html[dir="rtl"] .burger-menu-btn.active .burger-bar:nth-child(1) {
+    transform: translateY(8px) rotate(-45deg);
+}
+
+html[dir="rtl"] .burger-menu-btn.active .burger-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(45deg);
+}
+
+/* Fix animations for RTL */
+@keyframes rtl-fadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+html[dir="rtl"] .page-transition {
+    animation: rtl-fadeIn 0.3s ease-in-out;
+}
+
+/* Fix for any popups or modal elements */
+html[dir="rtl"] .modal-content {
+    text-align: right;
+    
+}
+
+/* Fix form elements to properly support RTL */
+html[dir="rtl"] input, 
+html[dir="rtl"] select, 
+html[dir="rtl"] textarea {
+    text-align: right;
+    
+}
+
+/* Fix schedule card in RTL */
+html[dir="rtl"] .schedule-header {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .schedule-times {
+    flex-direction: row-reverse;
+}
+
+/* Fix any dropdown positioning in RTL */
+html[dir="rtl"] .dropdown-menu {
+    right: 0;
+    left: auto;
+    text-align: right;
+    
+}
+
+/* Make sure transitions work properly in RTL mode */
+html[dir="rtl"] * {
+    transition-property: transform, opacity, visibility, width, height, background-color, color, border-color, box-shadow;
+}
+
+/* Additional mobile menu transition fixes for RTL */
+html[dir="rtl"] .mobile-menu {
+    width:max-content;
+    background-color: white;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+html[dir="rtl"] .mobile-menu.open {
+    width: 100%;
+    background-color: white;
+
+    max-width: 320px;
+    transform: none;
+}
+
+/* Loading indicator adjustments for RTL */
+html[dir="rtl"] #loading-overlay {
+    text-align: center;
+    
+}

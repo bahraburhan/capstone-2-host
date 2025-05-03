@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Bus Schedule App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/icon-fix.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                </div>
+                <h1 class="auth-title" data-i18n="auth.signup">Sign Up</h1>
+            </div>
+
+            <div id="error-message" class="error-message hidden"></div>
+
+            <form id="signup-form" class="auth-form">
+                <div class="form-group">
+                    <input type="text" id="firstName" placeholder="First Name" class="form-input" required
+                        data-i18n-placeholder="auth.firstName">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="lastName" placeholder="Last Name" class="form-input" required
+                        data-i18n-placeholder="auth.lastName">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="address" placeholder="Address" class="form-input" required
+                        data-i18n-placeholder="auth.address">
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email" class="form-input" required
+                        data-i18n-placeholder="auth.email">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Password" class="form-input" required
+                        data-i18n-placeholder="auth.password">
+                </div>
+
+                <button type="submit" id="signup-button" class="auth-button">
+                    <span data-i18n="auth.createAccount">Create Account</span>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>
+                    <span data-i18n="auth.alreadyHaveAccount">Already have an account?</span>
+                    <a href="login.html" class="auth-link">
+                        <span data-i18n="auth.login">Login</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use specific versions for better stability -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>

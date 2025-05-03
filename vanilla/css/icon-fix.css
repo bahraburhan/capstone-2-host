@@ -1,0 +1,41 @@
+/* Global SVG icon fixes */
+svg {
+    /* Default size for all SVGs if not otherwise specified */
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2 !important;
+}
+
+.menu-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.menu-arrow svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.contact-icon {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.nav-brand .icon,
+.logo-circle .icon {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* Fix for hero icon on index page */
+.hero-icon .arrow-icon {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* Fix for specific icons on profile/feedback pages */
+.profile-icon svg,
+.feedback-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+}

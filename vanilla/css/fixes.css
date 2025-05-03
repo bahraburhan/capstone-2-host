@@ -1,0 +1,101 @@
+/* Add these styles to fix animation delays */
+
+/* Faster animations for schedule cards */
+.schedule-card {
+    animation: fadeIn 0.2s ease forwards !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Show search results immediately */
+.search-results {
+    display: block;
+    opacity: 1;
+}
+
+.search-results.hidden {
+    display: none;
+}
+
+/* Faster transitions for all elements */
+.search-form,
+.search-button,
+.form-input,
+.street-select-container select,
+.view-route-button {
+    transition: all 0.2s ease !important;
+}
+
+/* Faster fade-in animation */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(5px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Add immediate hover states */
+.menu-item:hover,
+.search-button:hover,
+.view-route-button:hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* Ensure schedule container shows immediately */
+.schedule-container {
+    animation: fadeIn 0.2s ease forwards !important;
+}
+
+/* Fix animation delays for dropdown items */
+.dropdown-item {
+    transition: background-color 0.2s ease !important;
+}
+
+/* Ensure mobile menu toggle is responsive */
+.burger-menu-btn,
+.burger-bar {
+    transition: all 0.2s ease !important;
+}
+
+/* Make the view route button more prominent */
+.view-route-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.view-route-button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: width 0.2s ease !important;
+}
+
+.view-route-button:hover:after {
+    width: 100%;
+}
+
+/* Fix any RTL transition issues */
+html[dir="rtl"] .menu-item:hover .menu-text h2 {
+    transform: translateX(-0.25rem) !important;
+}
+
+html[dir="rtl"] .menu-item:hover .menu-arrow {
+    transform: translateX(-0.25rem) !important;
+}
+
+/* Ensure the mobile menu opens properly */
+.mobile-menu.open {
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Make sure dropdown doesn't have animation delay */
+.search-dropdown {
+    transition: opacity 0.2s ease, visibility 0.2s ease !important;
+}

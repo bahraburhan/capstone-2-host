@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - Bus Schedule App</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        :root {
+            --color-white: #ffffff;
+            --color-black: #000000;
+            --color-gray-100: #f3f4f6;
+            --color-gray-200: #e5e7eb;
+            --color-gray-300: #d1d5db;
+            --color-gray-400: #9ca3af;
+            --color-gray-500: #6b7280;
+            --color-gray-600: #4b5563;
+            --color-gray-700: #374151;
+            --color-gray-800: #1f2937;
+            --color-gray-900: #111827;
+            --color-indigo-50: #eef2ff;
+            --color-indigo-100: #e0e7ff;
+            --color-indigo-200: #c7d2fe;
+            --color-indigo-300: #a5b4fc;
+            --color-indigo-400: #818cf8;
+            --color-indigo-500: #6366f1;
+            --color-indigo-600: #4f46e5;
+            --color-indigo-700: #4338ca;
+            --color-indigo-800: #3730a3;
+            --color-indigo-900: #312e81;
+            --color-text: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9fafb;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Schedule Page Styles */
+        .schedule-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Search Form */
+        .search-form {
+            background-color: var(--color-white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-indigo-50);
+        }
+
+        .search-form:hover {
+            box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--color-gray-800);
+            display: flex;
+            align-items: center;
+        }
+
+        .search-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1.5rem;
+            background-color: var(--color-indigo-500);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-gray-700);
+        }
+
+        .search-input-container {
+            position: relative;
+        }
+
+        .search-input,
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus,
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-indigo-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: var(--color-indigo-600);
+            color: var(--color-white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-button:hover {
+            background-color: var(--color-indigo-700);
+            transform: translateY(-1px);
+        }
+
+        .search-button svg {
+            margin-right: 8px;
+        }
+
+        /* Search Results */
+        .search-results {
+            background-color: var(--color-white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--color-indigo-50);
+            transition: all 0.3s ease;
+        }
+
+        .search-results.hidden {
+            display: none;
+        }
+
+        .results-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--color-gray-800);
+            display: flex;
+            align-items: center;
+        }
+
+        .results-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1.25rem;
+            background-color: var(--color-indigo-500);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .schedule-card {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-gray-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .schedule-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            border-color: var(--color-indigo-200);
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .bus-line {
+            font-weight: bold;
+            color: var(--color-indigo-600);
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .bus-line svg {
+            margin-right: 6px;
+        }
+
+        .trip-info {
+            color: var(--color-gray-600);
+            font-size: 0.875rem;
+            background-color: var(--color-indigo-50);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .schedule-times {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--color-gray-50);
+            border-radius: 8px;
+        }
+
+        .time-group {
+            flex: 1;
+            text-align: center;
+        }
+
+        .time-group:first-child {
+            text-align: left;
+        }
+
+        .time-group:last-child {
+            text-align: right;
+        }
+
+        .time-label {
+            color: var(--color-gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .time-value {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: var(--color-gray-800);
+        }
+
+        .stop-name {
+            color: var(--color-gray-600);
+            font-size: 0.875rem;
+            word-break: break-word;
+            margin-top: 0.25rem;
+        }
+
+        .view-route-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--color-indigo-100);
+            color: var(--color-indigo-700);
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .view-route-button:hover {
+            background-color: var(--color-indigo-200);
+            transform: translateY(-2px);
+        }
+
+        .view-route-button svg {
+            margin-right: 6px;
+        }
+
+        /* Street selection styles */
+        .street-select-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .street-select-container select {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            appearance: none;
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 1rem center;
+        }
+
+        .street-select-container select:focus {
+            outline: none;
+            border-color: var(--color-indigo-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-container {
+                padding: 1rem;
+            }
+
+            .search-form,
+            .search-results {
+                padding: 1.25rem;
+            }
+
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-title, .results-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+    
+    <!-- Include the enhanced navbar CSS -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <!-- Include animation fixes CSS -->
+    <link rel="stylesheet" href="css/fixes.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Enhanced Navbar -->
+        <div class="navbar">
+            <div class="nav-brand">
+                <a href="menu.html" class="logo-link" title="Go to Menu Page">
+                    <div class="logo-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+                        </svg>
+                    </div>
+                    <span class="app-name" data-i18n="app.name">Bus Schedule</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <div class="user-info">
+                    <span id="user-display-name">User</span>
+                </div>
+                <button class="language-button" id="inline-language-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span id="language-text" data-i18n="common.language">Language</span>
+                </button>
+                <button class="burger-menu-btn" aria-label="Menu">
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="menu-overlay"></div>
+        
+        <!-- Enhanced Mobile Menu -->
+        <div class="mobile-menu">
+            <div class="mobile-menu-header">
+                <div class="menu-title" data-i18n="common.menu">Menu</div>
+                <button class="close-menu-btn" aria-label="Close menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-menu-items">
+                <a href="menu.html" class="mobile-menu-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span data-i18n="nav.menu">Menu</span>
+                </a>
+                <a href="schedule.html" class="mobile-menu-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span data-i18n="nav.schedule">Schedule</span>
+                </a>
+                <a href="planner.html" class="mobile-menu-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                        <line x1="8" y1="2" x2="8" y2="18"></line>
+                        <line x1="16" y1="6" x2="16" y2="22"></line>
+                    </svg>
+                    <span data-i18n="nav.planner">Route Planner</span>
+                </a>
+                <a href="feedback.html" class="mobile-menu-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span data-i18n="nav.feedback">Feedback</span>
+                </a>
+                <a href="profile.html" class="mobile-menu-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span data-i18n="nav.profile">Profile</span>
+                </a>
+                <button class="mobile-menu-item language-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span data-i18n="common.language">Language</span>
+                </button>
+                <button class="mobile-menu-item logout-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span data-i18n="auth.logout">Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Button Row Below Navbar (Back Button Only) -->
+        <div class="button-row">
+            <button class="back-button" id="back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span data-i18n="common.back">Back</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="schedule-container">
+                <!-- Search Form -->
+                <div class="search-form">
+                    <h2 class="search-title" data-i18n="schedule.searchTitle">Search Bus Schedule</h2>
+                    
+                    <!-- From Street (Street Selection) -->
+                    <div class="form-group">
+                        <label for="fromStreetSelect" data-i18n="schedule.from">From</label>
+                        <div class="street-select-container">
+                            <select id="fromStreetSelect" class="form-input">
+                                <option value="">Select a street</option>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- To Street (Street Selection) -->
+                    <div class="form-group">
+                        <label for="toStreetSelect" data-i18n="schedule.to">To</label>
+                        <div class="street-select-container">
+                            <select id="toStreetSelect" class="form-input">
+                                <option value="">Select a street</option>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="searchDate" data-i18n="schedule.date">Date</label>
+                            <input type="date" id="searchDate" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchTime" data-i18n="schedule.time">Time</label>
+                            <input type="time" id="searchTime" class="form-input">
+                        </div>
+                    </div>
+
+                    <!-- Search Button -->
+                    <button id="searchButton" class="search-button" data-i18n="schedule.search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        Search
+                    </button>
+                </div>
+
+                <!-- Search Results -->
+                <div id="searchResults" class="search-results hidden">
+                    <h3 class="results-title" data-i18n="schedule.availableRoutes">Available Routes</h3>
+                    <div id="scheduleGrid" class="schedule-grid">
+                        <!-- Schedule cards will be dynamically added by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div class="footer-container"></div>
+    </div>
+
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/streets.js"></script>
+    <script src="js/busStops.js"></script>
+    <script src="js/streetBusStopMapping.js"></script>
+    <script src="js/schedule.js"></script>
+</body>
+</html>

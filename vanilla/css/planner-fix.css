@@ -1,0 +1,116 @@
+/* Additional fixes for Planner page */
+
+/* Fix all SVG icons */
+svg {
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2 !important;
+}
+
+/* Improve marker icons */
+.marker svg {
+    width: 32px !important;
+    height: 32px !important;
+    stroke: var(--color-indigo-600);
+    fill: var(--color-white);
+    background-color: var(--color-white);
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.marker.selected svg {
+    background-color: var(--color-indigo-200);
+    stroke: var(--color-indigo-800);
+}
+
+/* Enhance the info panel */
+.info-panel {
+    border: 1px solid var(--color-gray-200);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.info-title {
+    color: var(--color-indigo-700);
+    border-bottom: 1px solid var(--color-gray-200);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.route-details {
+    background-color: var(--color-gray-50);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-gray-200);
+}
+
+.detail-item {
+    margin-bottom: 0.75rem;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: var(--color-indigo-700);
+}
+
+.detail-value {
+    font-weight: 600;
+    color: var(--color-indigo-900);
+}
+
+/* Improve the clear button */
+.clear-button {
+    background: linear-gradient(to right, var(--color-red-500), var(--color-red-600));
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+}
+
+.clear-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
+}
+
+/* Loading indicator improvements */
+.loading-indicator {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--color-indigo-200);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem 1.5rem;
+}
+
+.loading-spinner {
+    color: var(--color-indigo-600);
+    width: 2rem !important;
+    height: 2rem !important;
+}
+
+.loading-text {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Make map markers more visible */
+.mapboxgl-marker {
+    z-index: 5;
+}
+
+.mapboxgl-popup {
+    z-index: 6;
+}
+
+.mapboxgl-popup-content {
+    padding: 1rem;
+    border: 1px solid var(--color-indigo-200);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .info-panel {
+        width: calc(100% - 2rem);
+        max-width: none;
+    }
+}

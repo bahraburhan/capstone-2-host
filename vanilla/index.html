@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Schedule App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/icon-fix.css">
+   
+</head>
+<body>
+    <div class="container">
+
+
+        <!-- Header specific to index page -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+                    </svg>
+                </div>
+                <span class="app-name" data-i18n="app.name">Bus Schedule</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content visible">
+            <!-- Hero Image -->
+            <div class="hero-container">
+                <div class="hero-image">
+                    <img src="images/pexels-jonathanborba-2942172.jpg" alt="Bus Schedule App Hero Image">
+                </div>
+                <div class="hero-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 5l7 7-7 7"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Welcome Text -->
+            <div class="welcome-text">
+                <h1><span data-i18n="common.welcome">Welcome to</span> <span data-i18n="app.name">Bus Schedule</span></h1>
+                <p data-i18n="app.slogan">Your reliable bus tracking companion</p>
+            </div>
+
+            <!-- Start Button -->
+            <button class="start-button" onclick="handleStart()" id="start-button">
+                <span data-i18n="common.startButton">Get Started</span>
+            </button>
+            
+            <script>
+                // Make sure the button is directly clickable and visible
+                document.addEventListener('DOMContentLoaded', function() {
+                    const startButton = document.getElementById('start-button');
+                    if (startButton) {
+                        startButton.style.display = 'block';
+                        startButton.style.visibility = 'visible';
+                        startButton.style.opacity = '1';
+                    
+                        // Also make sure welcome text is visible
+                        const welcomeText = document.querySelector('.welcome-text');
+                        if (welcomeText) {
+                            welcomeText.style.display = 'block';
+                            welcomeText.style.visibility = 'visible';
+                            welcomeText.style.opacity = '1';
+                        }
+                        
+                        startButton.onclick = function() {
+                            console.log('Start button clicked via direct handler');
+                            
+                            // Try to get auth status using getCurrentUser helper
+                            if (typeof getCurrentUser === 'function') {
+                                getCurrentUser().then(user => {
+                                    if (user) {
+                                        // User is logged in, go to menu
+                                        console.log('User is authenticated, redirecting to menu');
+                                        window.location.href = 'menu.html';
+                                    } else {
+                                        // User is not logged in, go to login
+                                        console.log('User is not authenticated, redirecting to login');
+                                        window.location.href = 'login.html';
+                                    }
+                                }).catch(error => {
+                                    console.warn('Auth check failed, defaulting to login:', error);
+                                    window.location.href = 'login.html';
+                                });
+                            } else {
+                                // getCurrentUser not available yet, direct to login
+                                console.log('Auth helper not available, redirecting to login');
+                                window.location.href = 'login.html';
+                            }
+                        };
+                    }
+                });
+                
+                // Force visibility immediately without waiting for DOMContentLoaded
+                window.onload = function() {
+                    document.querySelector('.main-content').classList.add('visible');
+                    const startButton = document.getElementById('start-button');
+                    if (startButton) {
+                        startButton.style.display = 'block';
+                        startButton.style.visibility = 'visible';
+                        startButton.style.opacity = '1';
+                    }
+                };
+            </script>
+        </main>
+
+        <!-- Footer from component -->
+        <div class="footer-container"></div>
+    </div>
+
+    <!-- Load all scripts in the correct sequence -->
+    <script>
+        // Function to load a script and wait for it to complete
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+        }
+
+        // Function to load scripts in sequence
+        async function loadScriptsInOrder() {
+            try {
+                // First load Firebase core libraries
+                await loadScript('https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js');
+                await loadScript('https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js');
+                await loadScript('https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js');
+                await loadScript('https://www.gstatic.com/firebasejs/9.19.1/firebase-storage-compat.js');
+                
+                // Then load config and initialize Firebase
+                await loadScript('js/firebase-config.js');
+                
+                // Wait a moment to ensure Firebase is initialized
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Load global auth handler first
+                await loadScript('js/global-auth.js');
+                
+                // Then load the rest
+                await loadScript('js/i18n.js');
+                await loadScript('js/auth.js');
+                await loadScript('js/components.js');
+                await loadScript('js/home.js');
+                await loadScript('js/advertisement.js');
+                
+                console.log('All scripts loaded successfully');
+            } catch (error) {
+                console.error('Error loading scripts:', error);
+            }
+        }
+
+        // Start loading when the page is ready
+        window.addEventListener('load', loadScriptsInOrder);
+    </script>
+</body>
+</html>

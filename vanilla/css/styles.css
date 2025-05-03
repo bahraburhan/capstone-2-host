@@ -1,0 +1,80 @@
+:root {
+    --color-indigo-50: #eef2ff;
+    --color-indigo-400: #818cf8;
+    --color-indigo-500: #6366f1;
+    --color-indigo-600: #4f46e5;
+    --color-indigo-700: #4338ca;
+    --color-indigo-800: #3730a3;
+    --color-indigo-900: #312e81;
+    --color-blue-100: #dbeafe;
+    --color-white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, var(--color-indigo-50), var(--color-blue-100));
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* RTL Support */
+.rtl {
+    direction: rtl;
+}
+
+/* Utility Classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Modern Footer Styles */
+.footer {
+    background: linear-gradient(90deg, var(--color-indigo-700), var(--color-indigo-900));
+    color: var(--color-white);
+    padding: 2rem 0 1rem 0;
+    text-align: center;
+    box-shadow: 0 -2px 8px rgba(60,60,100,0.08);
+    margin-top: auto;
+}
+.footer .contact-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--color-indigo-100);
+}
+.footer .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+.footer .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: var(--color-white);
+}
+.footer .contact-icon {
+    color: var(--color-indigo-200);
+    margin-right: 0.3rem;
+}

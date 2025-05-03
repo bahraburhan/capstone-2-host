@@ -1,0 +1,58 @@
+/* Styling for the View Route button */
+.view-route-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.view-route-btn:hover {
+    background-color: #2980b9;
+}
+
+.view-route-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/* Route segment styles for direct route view */
+.route-segment {
+    margin-top: 12px;
+    padding: 10px;
+    background-color: #f5f9ff;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+}
+
+.route-segment div {
+    margin-bottom: 4px;
+}
+
+/* Bus stop marker styles */
+.bus-stop-marker {
+    width: 24px;
+    height: 24px;
+    background-color: #3498db;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.4);
+    cursor: pointer;
+}
+
+.start-bus-stop {
+    background-color: #2ecc71;
+    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.4);
+}
+
+.end-bus-stop {
+    background-color: #e74c3c;
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.4);
+}

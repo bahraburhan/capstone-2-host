@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Bus Schedule App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/icon-fix.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+                <h1 class="auth-title" data-i18n="auth.login">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to continue to your account</p>
+            </div>
+
+            <div id="error-message" class="error-message hidden"></div>
+
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email address" class="form-input" required
+                        data-i18n-placeholder="auth.email">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Password" class="form-input" required
+                        data-i18n-placeholder="auth.password">
+                    <div class="forgot-password">
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                </div>
+
+                <button type="submit" id="login-button" class="auth-button">
+                    <span data-i18n="auth.login">Sign In</span>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>
+                    <span data-i18n="auth.dontHaveAccount">Don't have an account?</span>
+                    <a href="signup.html" class="auth-link">
+                        <span data-i18n="auth.signup">Sign Up</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use specific versions for better stability -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
