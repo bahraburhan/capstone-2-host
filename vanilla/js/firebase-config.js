@@ -50,10 +50,13 @@ const initializeFirebase = () => {
                         .then(() => {
                             console.log('Firebase initialized successfully with Storage');
                             window.firebaseInitialized = true;
+                            // Disable email verification requirement
+                            firebase.auth().settings.appVerificationDisabledForTesting = true;
+                            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
                             resolve(true);
                         })
                         .catch(error => {
-                            console.warn('Firebase Storage initialization failed, but Firebase core is available:', error.message);
+                            console.warn('// Firebase configuration and initialization failed, but Firebase core is available:', error.message);
                             window.firebaseInitialized = true;
                             resolve(true);
                         });

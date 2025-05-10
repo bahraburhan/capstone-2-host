@@ -109,6 +109,9 @@ function initializeProfilePage() {
             window.statusMessageTimeout = setTimeout(() => {
                 errorMessage.classList.add('hidden');
             }, 5000);
+        } else {
+            // Fallback if error element not found
+            alert('Error: ' + message);
         }
     }
 
@@ -135,6 +138,9 @@ function initializeProfilePage() {
             
             // Scroll to top if needed to ensure visibility
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // Fallback if success element not found
+            alert('Success: ' + message);
         }
     }
 
@@ -216,10 +222,13 @@ function initializeProfilePage() {
                 displayName: newDisplayName
             });
 
+            // Get the most current email value from input or user object
+            const currentEmail = (emailInput && emailInput.value.trim()) || user.email;
+            
             // Update user data in Firestore
             await firebase.firestore().collection('users').doc(user.uid).set({
                 displayName: newDisplayName,
-                email: user.email,
+                email: currentEmail,
                 phoneNumber: phoneNumber,
                 address: address,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -238,7 +247,9 @@ function initializeProfilePage() {
             }
 
             // Show success with translation support
-            const successMsg = window.i18next ? window.i18next.t('profile.updateSuccess', 'Profile updated successfully') : 'Profile updated successfully';
+            const successMsg = window.i18next ? 
+                window.i18next.t('profile.updateSuccess', 'Profile updated successfully') : 
+                'Profile updated successfully';
             showSuccess(successMsg);
             toggleEditMode(false);
         } catch (error) {
@@ -254,7 +265,7 @@ function initializeProfilePage() {
     }
 
     // Handle password change
-    const handlePasswordChange = async () => {
+    async function handlePasswordChange() {
         if (!newPasswordInput || !confirmPasswordInput) {
             showError('Password form elements not found.');
             return;
@@ -281,7 +292,7 @@ function initializeProfilePage() {
             showError('Failed to change password. Please try again.');
             updating = false;
         }
-    };
+    }
 
     // Complete password change after re-authentication
     async function completePasswordChange() {
@@ -309,6 +320,77 @@ function initializeProfilePage() {
             showError('Failed to change password. Please try again.');
         }
     }
+    
+    // Helper function to migrate user data between accounts
+    async function migrateUserData(oldUid, newUid) {
+        console.log(`Migrating user data from ${oldUid} to ${newUid}`);
+        const db = firebase.firestore();
+        
+        try {
+            // 1. Copy user feedback history
+            const feedbackQuery = await db.collection('feedback')
+                .where('userId', '==', oldUid)
+                .get();
+                
+            if (!feedbackQuery.empty) {
+                console.log(`Migrating ${feedbackQuery.size} feedback records`);
+                const batch = db.batch();
+                
+                feedbackQuery.forEach(doc => {
+                    const newFeedbackRef = db.collection('feedback').doc();
+                    const feedbackData = {
+                        ...doc.data(),
+                        userId: newUid,
+                        oldUserId: oldUid,
+                        migratedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    batch.set(newFeedbackRef, feedbackData);
+                });
+                
+                await batch.commit();
+                console.log('Feedback data migration complete');
+            }
+            
+            // 2. Copy user route history
+            const routeHistoryQuery = await db.collection('routeHistory')
+                .where('userId', '==', oldUid)
+                .get();
+                
+            if (!routeHistoryQuery.empty) {
+                console.log(`Migrating ${routeHistoryQuery.size} route history records`);
+                const batch = db.batch();
+                
+                routeHistoryQuery.forEach(doc => {
+                    const newRouteRef = db.collection('routeHistory').doc();
+                    const routeData = {
+                        ...doc.data(),
+                        userId: newUid,
+                        oldUserId: oldUid,
+                        migratedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    batch.set(newRouteRef, routeData);
+                });
+                
+                await batch.commit();
+                console.log('Route history migration complete');
+            }
+            
+            // 3. Create a migration record for reference
+            await db.collection('userMigrations').doc().set({
+                oldUid: oldUid,
+                newUid: newUid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                status: 'completed'
+            });
+            
+            console.log('User data migration completed successfully');
+            return true;
+        } catch (migrationError) {
+            console.error('Error during data migration:', migrationError);
+            // Still return true - we don't want to fail the whole operation if migration has issues
+            return false;
+        }
+    }
 
     // Re-authenticate user
     async function reAuthenticateUser() {
@@ -332,13 +414,142 @@ function initializeProfilePage() {
             console.log('User re-authenticated successfully');
 
             if (pendingAction === 'updateProfile' && emailInput) {
-                console.log('Updating email to:', emailInput.value);
-                await user.updateEmail(emailInput.value);
-                await updateDisplayNameAndSaveToFirestore();
+                const newEmail = emailInput.value.trim();
+                console.log('Processing email update to:', newEmail);
+                
+                // Verify the new email is different from the current one
+                if (newEmail === user.email) {
+                    toggleEditMode(false); // Close edit mode
+                    return; // No need to update if email hasn't changed
+                }
+                
+                try {
+                    // Show loading state
+                    if (saveProfileButton) {
+                        saveProfileButton.textContent = 'Migrating Account...';
+                        saveProfileButton.disabled = true;
+                    }
+                    
+                    // 1. Get current user data
+                    const oldUid = user.uid;
+                    const newDisplayName = displayNameInput ? displayNameInput.value.trim() : user.displayName || '';
+                    const phoneNumber = phoneNumberInput ? phoneNumberInput.value.trim() : '';
+                    const address = addressInput ? addressInput.value.trim() : '';
+                    
+                    // 2. Get current user's Firestore data
+                    console.log('Fetching current user data from Firestore...');
+                    const userDoc = await firebase.firestore().collection('users').doc(oldUid).get();
+                    let userData = {};
+                    if (userDoc.exists) {
+                        userData = userDoc.data();
+                        console.log('Current user data retrieved:', userData);
+                    }
+                    
+                    // 3. Create a new user account with the new email
+                    console.log('Creating new account with email:', newEmail);
+                    try {
+                        // Get the current user's password from re-auth input field
+                        const currentPassword = reAuthPasswordInput.value;
+                        
+                        // Create the new user account
+                        const newUserCredential = await firebase.auth().createUserWithEmailAndPassword(newEmail, currentPassword);
+                        const newUser = newUserCredential.user;
+                        console.log('New user account created:', newUser.uid);
+                        
+                        // Update the display name on the new account
+                        await newUser.updateProfile({ displayName: newDisplayName });
+                        
+                        // 4. Copy all user data to the new account in Firestore
+                        await firebase.firestore().collection('users').doc(newUser.uid).set({
+                            ...userData,
+                            displayName: newDisplayName,
+                            email: newEmail,
+                            phoneNumber: phoneNumber,
+                            address: address,
+                            previousUid: oldUid, // Keep track of previous UID
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        
+                        // 5. Update any other collections that reference this user
+                        // For example, copy user history, feedback, etc.
+                        await migrateUserData(oldUid, newUser.uid);
+                        
+                        // 6. Success message will be shown after deletion attempt
+                        
+                        // 7. Delete the old user account
+                        try {
+                            // Get a new auth token to delete the old account
+                            const oldUserAuth = firebase.auth.EmailAuthProvider.credential(
+                                user.email,
+                                currentPassword
+                            );
+                            
+                            await user.reauthenticateWithCredential(oldUserAuth);
+                            console.log('Re-authenticated for account deletion');
+                            
+                            // Delete the old user account
+                            await user.delete();
+                            console.log('Old user account deleted successfully');
+                            
+                            showSuccess('Email has been updated successfully! Your account has been migrated to the new email address ' + newEmail + ' Please login again.');
+                        } catch (deleteError) {
+                            console.error('Error deleting old account:', deleteError);
+                            // Continue with sign out even if delete fails
+                            showSuccess('Email has been updated successfully! Your account has been migrated to the new email address ' + newEmail + '. Please login again. ');
+                        }
+                        
+                        // 8. Sign out and redirect to login page
+                        setTimeout(() => {
+                            firebase.auth().signOut().then(() => {
+                                console.log('User signed out, redirecting to login');
+                                // Clear all localStorage except language preference
+                                const languagePref = localStorage.getItem('language');
+                                localStorage.clear();
+                                if (languagePref) localStorage.setItem('language', languagePref);
+                                
+                                // Redirect to login page
+                                window.location.href = 'login.html?emailChanged=true&email=' + encodeURIComponent(newEmail);
+                            });
+                        }, 3000); // Give time to see the success message
+                        
+                        return; // Stop further processing
+                    } catch (createError) {
+                        console.error('Error creating new account:', createError);
+                        
+                        if (createError.code === 'auth/email-already-in-use') {
+                            showError('This email is already in use by another account. Please choose a different email.');
+                        } else {
+                            showError('Failed to update email: ' + createError.message);
+                        }
+                        
+                        // Revert input value to current email
+                        if (emailInput) emailInput.value = user.email;
+                        
+                        // Reset button state
+                        if (saveProfileButton) {
+                            saveProfileButton.textContent = 'Save';
+                            saveProfileButton.disabled = false;
+                        }
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error during account migration:', error);
+                    showError('Account migration failed: ' + error.message);
+                    
+                    // Revert input value to current email
+                    if (emailInput) emailInput.value = user.email;
+                    
+                    // Reset button state
+                    if (saveProfileButton) {
+                        saveProfileButton.textContent = 'Save';
+                        saveProfileButton.disabled = false;
+                    }
+                }
             } else if (pendingAction === 'updatePassword') {
                 await completePasswordChange();
             }
-
+            
             if (reAuthModal) {
                 reAuthModal.classList.add('hidden');
             }

@@ -20,7 +20,7 @@
     <script src="js/admin-guard.js"></script>
 </head>
 <body class="admin-body">
-    <!-- Loading Screen 11 -->
+    <!-- Loading Screen -->
     <div id="loading-overlay" class="loading-overlay">
         <div class="loading-spinner"></div>
         <p class="loading-text">Loading Admin Dashboard...</p>
@@ -57,10 +57,12 @@
                         <i class="fas fa-comments"></i>
                         <span>Feedbacks</span>
                     </li>
+
                     <li data-section="advertisements">
                         <i class="fas fa-ad"></i>
                         <span>Advertisements</span>
                     </li>
+
                     <li id="logout-button">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
@@ -252,32 +254,14 @@
                 <!-- Advertisements Section -->
                 <section id="advertisements-section" class="admin-section">
                     <div class="section-header">
-                        <h3>Manage Advertisements</h3>
-                        <div class="section-actions">
-                            <div class="search-box">
-                                <input type="text" id="ad-search" placeholder="Search advertisements...">
-                                <i class="fas fa-search"></i>
-                            </div>
-                            <button id="add-advertisement" class="primary-button">
-                                <i class="fas fa-plus"></i> Add New Ad
-                            </button>
-                        </div>
+                        <h3>Advertisements</h3>
                     </div>
                     
                     <div id="advertisements-container" class="advertisements-container">
-                        <!-- Advertisement cards will be inserted here dynamically -->
-                        <div class="ad-loading">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <p>Loading advertisements...</p>
-                        </div>
-                    </div>
-                    
-                    <div class="pagination">
-                        <button id="ad-prev-page" disabled><i class="fas fa-chevron-left"></i></button>
-                        <span id="ad-page-info">Page 1 of 1</span>
-                        <button id="ad-next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                        <!-- Advertisements content will be blank -->
                     </div>
                 </section>
+
             </div>
         </div>
     </div>
@@ -371,61 +355,13 @@
         </div>
     </div>
 
-    <!-- Modal for advertisement create/edit -->
-    <div id="advertisement-modal" class="admin-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="ad-modal-title">Add New Advertisement</h3>
-                <button class="close-modal"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body">
-                <form id="advertisement-form">
-                    <div class="form-group">
-                        <label for="ad-title">Title:</label>
-                        <input type="text" id="ad-title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ad-description">Description:</label>
-                        <textarea id="ad-description" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="ad-link">Link URL:</label>
-                        <input type="url" id="ad-link" required placeholder="https://example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="ad-location">Display Location:</label>
-                        <select id="ad-location" required>
-                            <option value="index">Home Page</option>
-                            <option value="menu">Menu Page</option>
-                            <option value="route">Route Page</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ad-image">Advertisement Image:</label>
-                        <div class="image-upload-container">
-                            <div id="image-preview" class="image-preview">
-                                <i class="fas fa-image"></i>
-                                <p>No image selected</p>
-                            </div>
-                            <input type="file" id="ad-image" accept="image/*">
-                            <label for="ad-image" class="file-upload-btn">Choose Image</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-actions">
-                            <button type="button" id="save-advertisement" class="primary-button">Save Advertisement</button>
-                            <button type="button" id="cancel-ad-edit" class="secondary-button">Cancel</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 
     <script src="js/admin-core.js"></script>
     <script src="js/admin-users.js"></script>
     <script src="js/admin-feedback.js"></script>
-    <script src="js/admin-ads.js"></script>
+    <script src="js/admin-advertisements.js"></script>
+
     <script src="js/admin-modal-fix.js"></script>
 </body>
 </html>
