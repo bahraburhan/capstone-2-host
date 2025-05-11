@@ -257,7 +257,7 @@ function initNavbar() {
     mobileMenu = document.querySelector('.mobile-menu');
     menuOverlay = document.querySelector('.menu-overlay');
     closeMenuBtn = document.querySelector('.close-menu-btn');
-    languageToggles = document.querySelectorAll('.language-toggle, .language-button, #inline-language-toggle');
+    languageToggles = document.querySelectorAll('.language-toggle, .language-button, #inline-language-toggle');  
     logoutButtons = document.querySelectorAll('.logout-button');
     userDisplayName = document.getElementById('user-display-name');
     
