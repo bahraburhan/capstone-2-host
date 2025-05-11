@@ -64,7 +64,7 @@ svg {
 .form-group input:hover,
 .form-group select:hover,
 .form-group textarea:hover {
-    border-color: var(--color-indigo-400);
+    border-color: black;
 }
 
 .form-group input:focus,
