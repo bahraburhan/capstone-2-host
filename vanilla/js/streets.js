@@ -145,8 +145,8 @@ const SULAYMANIYAH_STREETS = [
         startPoint: [45.4400, 35.5900],
         endPoint: [45.5000, 35.6087],
         description: "Scenic road with mountain views",
-        isMainRoad: false
-    },
+        isMainRoad: false
+    },
 ];
 
 // Helper function to get a random point along a street
