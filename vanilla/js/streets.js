@@ -131,13 +131,22 @@ const SULAYMANIYAH_STREETS = [
     },
     {
         id: 15,
-        name: "Qulaqullay Road",
-        kurdishName: "ڕێگای قوڵاقوڵای",
+        name: "Garden City",
+        kurdishName: "گاردن ستی",
         startPoint: [45.4321, 35.5876],
         endPoint: [45.4376, 35.5987],
         description: "Scenic road with mountain views",
         isMainRoad: false
-    }
+    },
+    {
+        id: 16,
+        name: "Azmar Road",
+        kurdishName: "ڕێگای ازمەر",
+        startPoint: [45.4400, 35.5900],
+        endPoint: [45.5000, 35.6087],
+        description: "Scenic road with mountain views",
+        isMainRoad: false
+    },
 ];
 
 // Helper function to get a random point along a street
