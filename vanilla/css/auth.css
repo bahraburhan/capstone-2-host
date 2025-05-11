@@ -66,6 +66,7 @@
     color: var(--color-indigo-700);
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
+    background: red;
 }
 
 .auth-subtitle {
