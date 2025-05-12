@@ -8,6 +8,10 @@ let currentUserData = null;
 // Load users from Firebase Auth and Firestore
 async function loadUsers() {
     const usersTableBody = document.getElementById('users-table-body');
+    if (!usersTableBody) {
+        console.error('users-table-body element not found');
+        return;
+    }
     usersTableBody.innerHTML = '<tr class="user-loading"><td colspan="6">Loading users...</td></tr>';
     
     try {
@@ -129,6 +133,12 @@ function updatePagination() {
     const prevButton = document.getElementById('prev-page');
     const nextButton = document.getElementById('next-page');
     const pageInfo = document.getElementById('page-info');
+    
+    // Add null checks for all elements
+    if (!prevButton || !nextButton || !pageInfo) {
+        console.warn('Pagination elements not found in the DOM');
+        return;
+    }
     
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
     prevButton.disabled = currentPage === 1;

@@ -1,0 +1,177 @@
+/* ===== COMPREHENSIVE ICON SIZE FIXES ===== */
+/* This stylesheet fixes all icon size issues across the app */
+
+/* Global default icon sizes */
+svg {
+    width: 22px !important;
+    height: 22px !important;
+    max-width: 100%;
+    max-height: 100%;
+    stroke-width: 1.5px !important;
+}
+
+/* Kurdish language - smaller global size for all icons */
+html[lang="ku"] svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 1px !important;
+}
+
+/* ===== NAVBAR SPECIFIC FIXES ===== */
+/* Fix navbar logo size */
+.nav-brand svg,
+.navbar svg,
+.logo-circle svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+html[lang="ku"] .nav-brand svg,
+html[lang="ku"] .navbar svg,
+html[lang="ku"] .logo-circle svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Fix logo container */
+.logo-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px !important;
+    height: 32px !important;
+}
+
+html[lang="ku"] .logo-circle {
+    width: 26px !important;
+    height: 26px !important;
+}
+
+/* ===== CONFIRMATION PAGE FIXES ===== */
+/* Success checkmark icon */
+.success-icon svg,
+.checkmark-icon {
+    width: 28px !important;
+    height: 28px !important;
+    stroke-width: 2px !important;
+}
+
+html[lang="ku"] .success-icon svg,
+html[lang="ku"] .checkmark-icon {
+    width: 18px !important;
+    height: 18px !important;
+    stroke-width: 1.25px !important;
+}
+
+/* Success icon container */
+.success-icon {
+    width: 60px !important;
+    height: 60px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem !important;
+}
+
+html[lang="ku"] .success-icon {
+    width: 46px !important;
+    height: 46px !important;
+}
+
+/* ===== FEEDBACK FORM FIXES ===== */
+/* Star rating icons */
+.star-rating-container svg,
+.star svg {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+html[lang="ku"] .star-rating-container svg,
+html[lang="ku"] .star svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Submit button icons */
+.submit-button svg {
+    width: 16px !important;
+    height: 16px !important;
+    vertical-align: middle !important;
+}
+
+html[lang="ku"] .submit-button svg {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 480px) {
+    /* Smaller icons on mobile */
+    svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    html[lang="ku"] svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    
+    .success-icon {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    html[lang="ku"] .success-icon {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .success-icon svg,
+    .checkmark-icon {
+        width: 24px !important;
+        height: 24px !important;
+    }
+    
+    html[lang="ku"] .success-icon svg,
+    html[lang="ku"] .checkmark-icon {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+/* Extra small icons for confirmation page in Kurdish */
+html[lang="ku"] .checkmark-icon {
+    width: 12px !important;
+    height: 12px !important;
+    stroke-width: 1px !important;
+}
+
+/* Additional fixes for language toggle button */
+html[lang="ku"] .language-button svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Fixes for mobile menu icons */
+html[lang="ku"] .mobile-menu-item svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Fixes for small contact icons in footer */
+html[lang="ku"] .contact-icon,
+html[lang="ku"] .footer svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Fixes for confirmation page layout in RTL languages */
+html[lang="ku"] .confirmation-container {
+    direction: rtl;
+    text-align: center;
+}
+
+html[lang="ku"] .success-icon {
+    margin: 0 auto 1rem auto;
+}

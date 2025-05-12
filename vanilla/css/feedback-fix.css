@@ -1,10 +1,30 @@
 /* Additional fixes for Profile page */
 
-/* Fix all SVG icons */
+/* Fix all SVG icons, but make exceptions for buttons */
 svg {
     width: 24px !important;
     height: 24px !important;
     stroke-width: 2 !important;
+}
+
+/* Override for submit button icons to ensure proper sizing */
+.submit-button svg {
+    width: 18px !important;
+    height: 18px !important;
+    vertical-align: middle;
+}
+
+/* Specific fixes for Kurdish language */
+html[lang="ku"] .submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+html[lang="ku"] .submit-button svg {
+    width: 16px !important;
+    height: 16px !important;
 }
 
 /* Improve the profile container */
