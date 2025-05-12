@@ -43,7 +43,7 @@ const translations = {
         'schedule.to': 'To',
         'schedule.date': 'Date',
         'schedule.time': 'Time',
-        'schedule.search': 'Search',
+        'schedule.search': 'SearchToSee',
         'schedule.availableRoutes': 'Available Routes',
         'schedule.departure': 'Departure',
         'schedule.arrival': 'Arrival',
@@ -70,6 +70,7 @@ const translations = {
         'feedback.haveQuestion': 'Have a question?',
         'feedback.ask': 'Ask',
         'Error.failedToSubmit': 'Failed to submit feedback. Please try again.',
+       
         // Feedback confirmation translations
         'feedback.thankYou': 'Thank You!',
         'feedback.feedbackReceived': 'Your feedback has been received. We appreciate your input!',
@@ -200,6 +201,7 @@ const translations = {
         'feedback.helpImprove': 'ڕاوبۆچوونەکانت یارمەتیمان دەدات خزمەتگوزاریەکەمان باشتر بکەین',
         'feedback.haveQuestion': 'پرسیارت هەیە؟',
         'feedback.ask': 'بپرسە',
+        
         'Error.failedToSubmit': 'نەتوانرا ڕاوبۆچوونەکە بنێردرێت. تکایە دووبارە هەوڵبدەوە.',
         // Feedback confirmation translations
         'feedback.thankYou': 'سوپاس!',

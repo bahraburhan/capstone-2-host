@@ -35,10 +35,12 @@ function initializeFeedbackPage() {
     createStarRating('bus-quality-rating', (rating) => {
         busQuality = rating;
     });
+    
 
     createStarRating('route-accuracy-rating', (rating) => {
         routeAccuracy = rating;
     });
+    
 
     // Ensure textarea is editable
     const commentsInput = document.getElementById('comments');
