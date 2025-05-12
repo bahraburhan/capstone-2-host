@@ -40,7 +40,7 @@
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: #f1f5f9;
+    background-color: #f9f2f1;
     margin-right: 0.75rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
     color: black;
@@ -53,7 +53,7 @@
 }
 
 .logo-circle .icon {
-    color: #4338ca !important;
+    color: #ce440d9e !important;
     stroke: #4338ca !important;
     fill: none;
     stroke-width: 2;
