@@ -49,10 +49,6 @@
                         <i class="fas fa-users"></i>
                         <span>Users</span>
                     </li>
-                    <li data-section="analytics">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Analytics</span>
-                    </li>
                     <li data-section="feedbacks">
                         <i class="fas fa-comments"></i>
                         <span>Feedbacks</span>
@@ -118,96 +114,7 @@
                     
                 </section>
                 
-                <!-- Analytics Section -->
-                <section id="analytics-section" class="admin-section">
-                    <div class="section-header">
-                        <h3>System Analytics</h3>
-                        <div class="section-actions">
-                            <select id="time-range">
-                                <option value="7">Last 7 days</option>
-                                <option value="30">Last 30 days</option>
-                                <option value="90">Last 90 days</option>
-                                <option value="365">Last year</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="analytics-cards">
-                        <div class="analytics-card">
-                            <div class="analytics-card-icon users-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="analytics-card-content">
-                                <h4>Total Users</h4>
-                                <p id="total-users">Loading...</p>
-                                <span id="users-change" class="change-indicator positive">
-                                    <i class="fas fa-arrow-up"></i> Loading...
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-card">
-                            <div class="analytics-card-icon feedback-icon">
-                                <i class="fas fa-comment"></i>
-                            </div>
-                            <div class="analytics-card-content">
-                                <h4>Feedbacks</h4>
-                                <p id="total-feedbacks">Loading...</p>
-                                <span id="feedbacks-change" class="change-indicator positive">
-                                    <i class="fas fa-arrow-up"></i> Loading...
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-card">
-                            <div class="analytics-card-icon rating-icon">
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <div class="analytics-card-content">
-                                <h4>Avg. Rating</h4>
-                                <p id="avg-rating">Loading...</p>
-                                <span id="rating-change" class="change-indicator neutral">
-                                    <i class="fas fa-minus"></i> Loading...
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-card">
-                            <div class="analytics-card-icon active-icon">
-                                <i class="fas fa-user-clock"></i>
-                            </div>
-                            <div class="analytics-card-content">
-                                <h4>Active Users</h4>
-                                <p id="active-users">Loading...</p>
-                                <span id="active-change" class="change-indicator positive">
-                                    <i class="fas fa-arrow-up"></i> Loading...
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="analytics-charts">
-                        <div class="chart-container">
-                            <h4>User Growth</h4>
-                            <div id="user-growth-chart" class="chart">
-                                <div class="chart-placeholder">
-                                    <i class="fas fa-chart-line"></i>
-                                    <p>Loading chart data...</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-container">
-                            <h4>Feedback Ratings</h4>
-                            <div id="feedback-ratings-chart" class="chart">
-                                <div class="chart-placeholder">
-                                    <i class="fas fa-chart-bar"></i>
-                                    <p>Loading chart data...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                
                 
                 <!-- Feedbacks Section -->
                 <section id="feedbacks-section" class="admin-section">
