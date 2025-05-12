@@ -18,7 +18,8 @@ const STREET_TO_BUS_STOP_MAP = {
     12: 12, // Kirkuk Road -> Bus Stop ID 12
     13: 13, // Ahmad Ismail Street -> Bus Stop ID 13
     14: 14, // Majid Bag Street -> Bus Stop ID 14
-    15: 15  // Qulaqullay Road -> Bus Stop ID 15
+    15: 15,  // Garden City -> Bus Stop ID 15
+    16:16   // Azmar Road -> Bus Stop ID 16
 };
 
 // Define bus lines (color-coded for UI)
