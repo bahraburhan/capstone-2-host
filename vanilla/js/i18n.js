@@ -43,7 +43,7 @@ const translations = {
         'schedule.to': 'To',
         'schedule.date': 'Date',
         'schedule.time': 'Time',
-        'schedule.search': 'SearchToSee',
+        'schedule.search': 'Search',
         'schedule.availableRoutes': 'Available Routes',
         'schedule.departure': 'Departure',
         'schedule.arrival': 'Arrival',
