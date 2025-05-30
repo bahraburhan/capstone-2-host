@@ -1,7 +1,7 @@
 // Fix for the advertisement modal functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Direct event listener for the "Add New Advertisement" button
-    const addAdButton = document.getElementById('add-advertisement');
+    const addAdButton = document.getElementById('add-advertisement-btn');
     if (addAdButton) {
         console.log('Found Add New Advertisement button, attaching event listener');
         addAdButton.addEventListener('click', function(e) {
@@ -11,13 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('advertisement-modal');
             if (modal) {
                 modal.classList.add('active');
+                modal.style.display = 'block'; // Make sure it's visible with both methods
                 console.log('Modal should be visible now');
             } else {
                 console.error('Advertisement modal element not found');
             }
         });
     } else {
-        console.error('Add New Advertisement button not found');
+        console.log('Add New Advertisement button not found, it might be initialized elsewhere');
     }
 
     // Ensure close buttons work
