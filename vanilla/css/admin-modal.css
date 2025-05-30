@@ -100,6 +100,113 @@
     margin-top: 1.5rem;
 }
 
+/* Feedback Modal Styles */
+.feedback-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feedback-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feedback-user-info h4 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.feedback-user-info span {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.feedback-journey-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+}
+
+.feedback-journey-info span:first-child {
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.feedback-journey-info span:last-child {
+    color: #1f2937;
+    font-family: monospace;
+    background-color: #e5e7eb;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.feedback-ratings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.rating-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rating-item span {
+    font-weight: 500;
+    color: #4b5563;
+    font-size: 0.875rem;
+}
+
+.stars-display {
+    display: flex;
+    align-items: center;
+}
+
+.stars-display i {
+    color: #d1d5db;
+    margin-right: 0.25rem;
+}
+
+.stars-display i.filled {
+    color: #fbbf24;
+}
+
+.feedback-comments {
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+}
+
+.feedback-comments h5 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+.feedback-comments p {
+    margin: 0;
+    color: #1f2937;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    /* Fix for line-clamp compatibility */
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* Image upload styles */
 .image-upload-container {
     display: flex;
