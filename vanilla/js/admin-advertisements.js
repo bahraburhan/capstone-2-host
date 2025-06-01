@@ -530,24 +530,83 @@ async function saveAdvertisement() {
             if (imageInput && imageInput.files && imageInput.files[0]) {
                 try {
                     const file = imageInput.files[0];
-                    const imageRef = storage.ref().child(`advertisements/${adId || Date.now()}_${file.name}`);
                     
                     // Update loading message
                     if (saveButton) {
                         saveButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Uploading image...`;
                     }
                     
-                    // Upload image
-                    const snapshot = await imageRef.put(file);
-                    const imageUrl = await snapshot.ref.getDownloadURL();
-                    
-                    // Add image URL to advertisement data
-                    adData.imageUrl = imageUrl;
-                    console.log('Image uploaded successfully:', imageUrl);
+                    // Use ImgBB uploader (much simpler, no CORS issues)
+                    if (window.uploadImageToImgBB) {
+                        console.log('Using ImgBB uploader');
+                        const result = await window.uploadImageToImgBB(file);
+                        
+                        if (result.success) {
+                            // Use the display URL from ImgBB
+                            imageUrl = result.displayUrl || result.url;
+                            console.log('Image uploaded successfully to ImgBB:', imageUrl);
+                            
+                            // Add image URL to advertisement data
+                            adData.imageUrl = imageUrl;
+                        } else {
+                            throw new Error(`ImgBB upload failed: ${result.error}`);
+                        }
+                    } else {
+                        // Fallback to Firebase Storage if ImgBB uploader is not available
+                        console.warn('ImgBB uploader not available, falling back to Firebase Storage');
+                        const path = `advertisements/${adId || Date.now()}_${file.name}`;
+                        const imageRef = storage.ref().child(path);
+                        
+                        // Upload image with timeout to prevent hanging
+                        const uploadPromise = imageRef.put(file);
+                        
+                        // Set a timeout for the upload (15 seconds)
+                        const timeoutPromise = new Promise((_, reject) => {
+                            setTimeout(() => reject(new Error('Upload timed out')), 15000);
+                        });
+                        
+                        // Race the upload against the timeout
+                        const snapshot = await Promise.race([uploadPromise, timeoutPromise]);
+                        imageUrl = await snapshot.ref.getDownloadURL();
+                        
+                        // Add image URL to advertisement data
+                        adData.imageUrl = imageUrl;
+                    }
                 } catch (uploadError) {
                     console.error('Error uploading image:', uploadError);
-                    // Continue without image if upload fails
-                    alert('Image upload failed due to CORS issues. Please use the Image URL option instead.');
+                    
+                    // Reset the save button
+                    if (saveButton) {
+                        saveButton.innerHTML = `<i class="fas fa-save"></i> Save`;
+                    }
+                    
+                    // Check if it's a CORS error
+                    const errorMessage = uploadError.message || uploadError.toString();
+                    const isCorsError = errorMessage.includes('CORS') || 
+                                        errorMessage.includes('XMLHttpRequest') || 
+                                        errorMessage.includes('network error') ||
+                                        errorMessage.includes('timed out');
+                    
+                    if (isCorsError) {
+                        // Show a better error message with instructions
+                        const useUrlInstead = confirm(
+                            'Image upload failed due to CORS issues.\n\n' +
+                            'Would you like to enter an image URL instead?\n\n' +
+                            'Click OK to use an image URL or Cancel to continue without an image.'
+                        );
+                        
+                        if (useUrlInstead) {
+                            // Prompt for an image URL
+                            const imageUrl = prompt('Please enter the URL of an image:', '');
+                            if (imageUrl && imageUrl.trim() !== '') {
+                                adData.imageUrl = imageUrl.trim();
+                                console.log('Using provided image URL:', adData.imageUrl);
+                            }
+                        }
+                    } else {
+                        // Generic error message for non-CORS errors
+                        alert(`Image upload failed: ${errorMessage}`);
+                    }
                     
                     // Stop the save process if no previous image exists
                     if (!adId) {
